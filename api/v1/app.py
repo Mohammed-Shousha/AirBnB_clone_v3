@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
-starts a Flask API
+Main file for the API
 """
+
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
@@ -15,7 +16,7 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def teardown_db(exception):
     """
-    close storage
+    Closes the database
     """
     storage.close()
 

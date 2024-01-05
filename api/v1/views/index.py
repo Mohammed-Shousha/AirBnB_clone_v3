@@ -1,35 +1,31 @@
 #!/usr/bin/python3
 """
-returns json status response
+Index view for the API
 """
 
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import jsonify
 from models import storage
 
 
 @app_views.route('/status', methods=['GET'])
 def status():
     """
-    function for status route that returns the status
+    Returns a JSON status response
     """
-    if request.method == 'GET':
-        res = {"status": "OK"}
-        return jsonify(res)
+    return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
     """
-    function for status route that returns the status
+    Retrieves the number of each objects by type
     """
-    if request.method == 'GET':
-        res = {
-            "amenities": storage.count("Amenity"),
-            "cities": storage.count("City"),
-            "places": storage.count("Place"),
-            "reviews": storage.count("Review"),
-            "states": storage.count("State"),
-            "users": storage.count("User")
-        }
-        return jsonify(res)
+    return jsonify({
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User")
+    })
