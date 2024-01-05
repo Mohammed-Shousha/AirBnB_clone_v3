@@ -3,7 +3,7 @@
 Main file for the API
 """
 
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 import os
@@ -19,6 +19,12 @@ def teardown_db(exception):
     Closes the database
     """
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    """Returns a JSON-formatted 404 status code response"""
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == '__main__':
