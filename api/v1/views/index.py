@@ -1,22 +1,35 @@
 #!/usr/bin/python3
 """
-Returns json status response
+returns json status response
 """
 
-from flask import jsonify
 from api.v1.views import app_views
+from flask import jsonify, request
 from models import storage
 
 
 @app_views.route('/status', methods=['GET'])
 def status():
-    """Returns status"""
-    return jsonify({"status": "OK"})
+    """
+    function for status route that returns the status
+    """
+    if request.method == 'GET':
+        res = {"status": "OK"}
+        return jsonify(res)
 
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
-    """Returns stats"""
-    classes = {"amenities": "Amenity", "cities": "City", "places": "Place",
-               "reviews": "Review", "states": "State", "users": "User"}
-    return jsonify({key: storage.count(value) for key, value in classes.items()})
+    """
+    function for status route that returns the status
+    """
+    if request.method == 'GET':
+        res = {
+            "amenities": storage.count("Amenity"),
+            "cities": storage.count("City"),
+            "places": storage.count("Place"),
+            "reviews": storage.count("Review"),
+            "states": storage.count("State"),
+            "users": storage.count("User")
+        }
+        return jsonify(res)
